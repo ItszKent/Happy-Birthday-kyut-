@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Letter</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#ffb6d9;
+    min-height:100vh;
+    overflow-x:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    position:relative;
+    padding:20px;
+}
+
+/* decorations */
+
+.cake-deco{
+    position:absolute;
+    font-size:25px;
+    animation:float 4s infinite ease-in-out;
+    opacity:0.8;
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-10px);
+    }
+}
+
+/* title */
+
+.title{
+    position:absolute;
+    top:18px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:21px;
+    color:white;
+    font-weight:bold;
+    text-align:center;
+    background:rgba(255,255,255,0.25);
+    padding:8px 18px;
+    border-radius:20px;
+    backdrop-filter:blur(5px);
+    box-shadow:0 4px 12px rgba(0,0,0,0.12);
+    border:2px solid rgba(255,255,255,0.3);
+    z-index:10;
+    width:max-content;
+    max-width:90%;
+}
+
+/* first screen */
+
+.main{
+    text-align:center;
+    margin-top:50px;
+}
+
+.big-cake{
+    font-size:150px;
+    transition:1s;
+}
+
+.opened{
+    transform:scale(1.1) rotate(8deg);
+    opacity:0.2;
+}
+
+/* button */
+
+button{
+    margin-top:15px;
+    padding:14px 30px;
+    border:none;
+    border-radius:40px;
+    background:#ff4fa0;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+/* credit */
+
+.credit{
+    position:fixed;
+    bottom:15px;
+    background:white;
+    padding:10px 20px;
+    border-radius:30px;
+    color:#ff4fa0;
+    font-size:13px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* envelope */
+
+.envelope-section{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    animation:fadeIn 1s;
+}
+
+.top-text{
+    color:white;
+    font-size:24px;
+    margin-bottom:15px;
+    font-weight:bold;
+}
+
+.envelope{
+    font-size:120px;
+    animation:up 1s forwards;
+    cursor:pointer;
+}
+
+@keyframes up{
+    from{
+        transform:translateY(100px);
+        opacity:0;
+    }
+    to{
+        transform:translateY(0);
+        opacity:1;
+    }
+}
+
+/* fade */
+
+.fade-black{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:black;
+    top:0;
+    left:0;
+    opacity:0;
+    transition:1.5s;
+    pointer-events:none;
+    z-index:100;
+}
+
+/* final scene */
+
+.letter-scene{
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    animation:fadeIn 1s;
+    width:100%;
+    margin-top:45px;
+}
+
+/* bears */
+
+.bear-container{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.bear{
+    width:80px;
+    border-radius:20px;
+}
+
+/* paper */
+
+.paper{
+    width:95%;
+    max-width:650px;
+    background:#fffaf5;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    position:relative;
+    animation:paperOpen 1s ease;
+    border:3px dashed #ff9fcf;
+}
+
+.paper::before{
+    content:'';
+    position:absolute;
+    top:-12px;
+    left:25px;
+    width:70px;
+    height:25px;
+    background:#ff9fcf;
+    transform:rotate(-8deg);
+}
+
+.paper::after{
+    content:'';
+    position:absolute;
+    bottom:-12px;
+    right:25px;
+    width:70px;
+    height:25px;
+    background:#ff9fcf;
+    transform:rotate(8deg);
+}
+
+@keyframes paperOpen{
+    from{
+        transform:scale(0.5);
+        opacity:0;
+    }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+.paper h1{
+    color:#ff4fa0;
+    text-align:center;
+    margin-bottom:20px;
+    font-size:26px;
+}
+
+.paper p{
+    color:#444;
+    font-size:15px;
+    line-height:1.9;
+    text-align:center;
+}
+
+.last{
+    margin-top:25px;
+    font-size:28px;
+    color:#ff4fa0;
+    font-weight:bold;
+    text-align:center;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+    }
+    to{
+        opacity:1;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+
+<audio id="bgMusic" loop>
+    <source src="hehe.mp3" type="audio/mpeg">
+</audio>
+
+<!-- decorations -->
+
+<div class="cake-deco" style="top:15%;left:5%;">🎂</div>
+<div class="cake-deco" style="top:18%;right:8%;">🧁</div>
+<div class="cake-deco" style="bottom:20%;left:8%;">🎂</div>
+<div class="cake-deco" style="bottom:18%;right:8%;">🧁</div>
+
+<!-- title -->
+
+<div class="title">
+    Happy Birthday Kyut! 🎀
+</div>
+
+<!-- first screen -->
+
+<div class="main" id="mainScreen">
+
+    <div class="big-cake" id="cake">
+        🎂
+    </div>
+
+    <button onclick="openCake()">
+        Open the Cake
+    </button>
+
+</div>
+
+<!-- envelope -->
+
+<div class="envelope-section" id="envelopeSection">
+
+    <div class="top-text">
+        Open the envelope 💌
+    </div>
+
+    <div class="envelope" onclick="openLetter()">
+        💌
+    </div>
+
+</div>
+
+<!-- final scene -->
+
+<div class="letter-scene" id="letterScene">
+
+    <div class="bear-container">
+
+        <img class="bear"
+        src="https://media.tenor.com/6v2Q6o5J9iAAAAAC/bear-love.gif">
+
+        <img class="bear"
+        src="https://media.tenor.com/6v2Q6o5J9iAAAAAC/bear-love.gif">
+
+    </div>
+
+    <div class="paper">
+
+        <h1>Happy Birthday, kyut!!!!!!! 🎂</h1>
+
+        <p>
+        Sorry po dahil nakalimutan kitang batiin nung birthday mo.
+        Hindi ko talaga nakita yung notes mo that time, sorry po.
+        <br><br>
+
+        Btw, sana marami pang blessings ang dumating sa’yo,
+        at sana mahanap mo na yung future boyfriend mo HAHAHAHA.
+        Malay mo, ngayong pasukan makakahanap ka na.
+        Galingan mo rin haa pag pasukan na para maging proud
+        ang parents mo sa’yo.
+        <br><br>
+
+        Dw, pag may problema ka, sabihin mo lang para dagdagan
+        natin HAHAHAHAHAH. Joke lang po ah,
+        baka magalit ka na naman.
+        <br><br>
+
+        And pag pumunta ka dito, chat ka lang para libre kita.
+        Yun lang po.
+        </p>
+
+        <div class="last">
+            HAPPY BIRTHDAY, KYUT! 💖
+        </div>
+
+    </div>
+
+</div>
+
+<!-- credit -->
+
+<div class="credit">
+    💌 This letter is made by your nigga boy 😘
+</div>
+
+<!-- fade -->
+
+<div class="fade-black" id="fade"></div>
+
+<script>
+
+/* autoplay music after first interaction */
+
+document.addEventListener("click", function () {
+
+    const music = document.getElementById("bgMusic");
+
+    music.play();
+
+}, { once:true });
+
+function openCake(){
+
+    document.getElementById("cake").classList.add("opened");
+
+    setTimeout(()=>{
+
+        document.getElementById("mainScreen").style.display="none";
+
+        document.getElementById("envelopeSection").style.display="flex";
+
+    },1000);
+}
+
+function openLetter(){
+
+    let fade = document.getElementById("fade");
+
+    fade.style.opacity="1";
+
+    setTimeout(()=>{
+
+        document.getElementById("envelopeSection").style.display="none";
+
+        document.getElementById("letterScene").style.display="flex";
+
+        fade.style.opacity="0";
+
+    },1500);
+}
+
+</script>
+
+</body>
+</html>
